@@ -1,0 +1,45 @@
+import ProductJsonLd from "@/components/shared/ProductJsonLd";
+import { api, HydrateClient } from "@/trpc/server";
+import { ErrorBackButton, FullPage } from "./client";
+import { fetchProduct } from "@/server/services/product.services";
+
+// Generate static params for all products
+export async function generateStaticParams() {
+  const products = await fetchProduct();
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }));
+}
+
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const product = await api.product.getById({
+    id: parseInt(id),
+  });
+
+  if (!product) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <div className="text-center">
+          <h1 className="mb-4 text-2xl font-bold">Product Not Found</h1>
+          <p className="text-muted-foreground mb-6">
+            The product you&apos;re looking for doesn&apos;t exist or has been
+            removed.
+          </p>
+          <ErrorBackButton />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <HydrateClient>
+      <ProductJsonLd product={product} />
+      <FullPage product={product} />
+    </HydrateClient>
+  );
+}
