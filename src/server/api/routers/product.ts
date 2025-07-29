@@ -2,6 +2,7 @@ import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 import {
   fetchProduct,
   fetchProductById,
+  fetchProductByIdUnCached,
 } from "@/server/services/product.services";
 import { z } from "zod/v4";
 
@@ -15,6 +16,13 @@ export const productRouter = createTRPCRouter({
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
       const product = await fetchProductById(input.id);
+
+      return product;
+    }),
+  getByIdUnCached: publicProcedure
+    .input(z.object({ id: z.number() }))
+    .query(async ({ input }) => {
+      const product = await fetchProductByIdUnCached(input.id);
 
       return product;
     }),

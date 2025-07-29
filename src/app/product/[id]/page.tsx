@@ -5,14 +5,14 @@ import axios from "axios";
 import type { Product } from "@/types";
 
 // Generate static params for all products
-// export async function generateStaticParams() {
-//   const products = (
-//     await axios.get<Product[]>("https://fakestoreapi.com/products")
-//   ).data;
-//   return products.map((product) => ({
-//     id: product.id.toString(),
-//   }));
-// }
+export async function generateStaticParams() {
+  const products = (
+    await axios.get<Product[]>("https://fakestoreapi.com/products")
+  ).data;
+  return products.map((product) => ({
+    id: product.id.toString(),
+  }));
+}
 
 export default async function ProductPage({
   params,
@@ -20,7 +20,7 @@ export default async function ProductPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const product = await api.product.getById({
+  const product = await api.product.getByIdUnCached({
     id: parseInt(id),
   });
 

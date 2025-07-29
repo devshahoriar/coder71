@@ -26,3 +26,12 @@ export const fetchProductById = async (pId: string | number) => {
   );
   return cashedProduct(pId);
 };
+
+
+// on varcel cached version not compiled
+export const fetchProductByIdUnCached = async (pId: string | number) => {
+  const product = await axios.get<Product>(
+    `https://fakestoreapi.com/products/${pId}`,
+  );
+  return product.data;
+}
