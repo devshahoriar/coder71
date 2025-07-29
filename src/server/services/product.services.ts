@@ -10,6 +10,7 @@ export const fetchProduct = unstable_cache(
   [ProductKey],
   {
     revalidate: 1440, // 24 hours
+    tags: [ProductKey],
   },
 );
 
@@ -18,7 +19,7 @@ export const fetchProductById = async (pId: string | number) => {
     async (id) =>
       (await axios.get<Product>(`https://fakestoreapi.com/products/${id}`))
         .data,
-    [ProductKey],
+    ['id'],
     {
       revalidate: 1440, // 24 hours
       tags: [`${ProductKey}-${pId}`],
