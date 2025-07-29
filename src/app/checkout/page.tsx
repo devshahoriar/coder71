@@ -1,14 +1,14 @@
 "use client";
 
-import UnAuth from '@/components/shared/UnAuth';
+import UnAuth from "@/components/shared/UnAuth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import useCart from '@/hooks/useCart';
-import useUser from '@/hooks/useUser';
+import useCart from "@/hooks/useCart";
+import useUser from "@/hooks/useUser";
 import { checkoutSchema, type CheckoutFormData } from "@/lib/validations";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,7 +23,7 @@ export default function CheckoutPage() {
   const [ready, setReady] = useState(false);
   const { state, clearCart } = useCart();
   const router = useRouter();
-  const {isLoggedIn,isLoading} = useUser()
+  const { isLoggedIn, isLoading, data } = useUser();
 
   useEffect(() => {
     setReady(true);
@@ -48,7 +48,7 @@ export default function CheckoutPage() {
   const form = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
-      email: "",
+      email: data?.email ?? "",
       shipping: {
         firstName: "",
         lastName: "",
@@ -109,6 +109,10 @@ export default function CheckoutPage() {
     }
   };
 
+  if (isLoading) {
+    return null;
+  }
+
   if (!ready) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -118,7 +122,7 @@ export default function CheckoutPage() {
   }
 
   if (!isLoggedIn && !isLoading) {
-    return <UnAuth/>
+    return <UnAuth />;
   }
 
   if (state.items.length === 0) {
