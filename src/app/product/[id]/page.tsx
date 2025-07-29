@@ -1,11 +1,14 @@
 import ProductJsonLd from "@/components/shared/ProductJsonLd";
 import { api, HydrateClient } from "@/trpc/server";
 import { ErrorBackButton, FullPage } from "./client";
-import { fetchProduct } from "@/server/services/product.services";
+import axios from "axios";
+import type { Product } from "@/types";
 
 // Generate static params for all products
 export async function generateStaticParams() {
-  const products = await fetchProduct();
+  const products = (
+    await axios.get<Product[]>("https://fakestoreapi.com/products")
+  ).data;
   return products.map((product) => ({
     id: product.id.toString(),
   }));
