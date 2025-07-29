@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { env } from '@/env';
 import * as jose from "jose";
 
-const secret = process.env.SECRET_JWT;
+const secret:string = env.SECRET_JWT
 
 const encodeSec = new TextEncoder().encode(secret);
 const alg = "HS256";
