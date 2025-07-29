@@ -110,12 +110,16 @@ export default function CheckoutPage() {
   };
 
   if (isLoading) {
-    return null;
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center">
+        <p className="text-lg">Loading...</p>
+      </div>
+    );
   }
 
   if (!ready) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-[60vh] items-center justify-center">
         <p className="text-lg">Loading...</p>
       </div>
     );
