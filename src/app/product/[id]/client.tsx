@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import useCart from '@/hooks/useCart';
-import useUser from "@/hooks/useUser";
 import { api } from "@/trpc/react";
 import type { Product } from "@/types";
 import {
@@ -23,8 +22,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import Loading from "./loading";
-import UnAuth from "@/components/shared/UnAuth";
 
 export const ErrorBackButton = () => {
   const router = useRouter();
@@ -172,15 +169,7 @@ export const RelatedProduct = ({ product }: { product: Product }) => {
 };
 
 export const FullPage = ({ product }: { product: Product }) => {
-  const { isLoggedIn, isLoading } = useUser();
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (!isLoggedIn && !isLoading) {
-    return <UnAuth />;
-  }
 
   return (
     <>

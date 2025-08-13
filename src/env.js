@@ -8,7 +8,8 @@ export const env = createEnv({
    */
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
-    SECRET_JWT: z.string()
+    SECRET_JWT: z.string(),
+    GROQ_API_KEY: z.string()
   },
 
   /**
@@ -27,6 +28,7 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     SECRET_JWT: process.env.SECRET_JWT,
+    GROQ_API_KEY: process.env.GROQ_API_KEY,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

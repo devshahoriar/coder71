@@ -8,6 +8,7 @@ import { CartProvider } from "@/contexts/cart-context";
 import { Navigation } from "@/components/shared/navigation";
 import { Footer } from "@/components/shared/footer";
 import { Toaster } from "@/components/ui/sonner";
+import ChatModel from '@/components/shared/ChatModel';
 
 export const metadata: Metadata = {
   title: "YupStore - Premium E-commerce Experience",
@@ -36,6 +37,7 @@ export default function RootLayout({
             <div className="flex min-h-screen flex-col">
               <Navigation />
               <main className="flex-1">{children}</main>
+              <ChatModel/>
               <Footer />
             </div>
             <Toaster />
